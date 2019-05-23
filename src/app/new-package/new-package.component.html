@@ -1,0 +1,109 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-6">
+      <div class="card">
+        <div class="card-header">New package</div>
+        <div class="card-body">
+          <form
+            id="newPostForm"
+            [formGroup]="newPostForm"
+            (submit)="submit()"
+            (reset)="reset()"
+            #form="ngForm"
+            novalidate
+          >
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstname">First name:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="firstname"
+                  formControlName="firstname"
+                />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="lastname">Last name:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="lastname"
+                  formControlName="lastname"
+                />
+              </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                  <label for="telNo">Tel.no:</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="telNo"
+                    formControlName="telNo"
+                  />
+                </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="city">City:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="city"
+                  formControlName="city"
+                />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="street">Street:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="street"
+                  formControlName="street"
+                />
+              </div>
+            </div>
+            <div
+              class="form-check"
+              formArrayName="services"
+              name="services"
+              *ngFor="let service of newPostForm.get('services').controls; let i = index">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="services-{{ i }}"
+                name="services"
+                value="{{ availableServices[i].name }}"
+                [formControl]="service"
+              />
+              <label class="form-check-label" for="services">
+                {{ availableServices[i].name }} ${{availableServices[i].price}}
+            </label>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer bg-transparent text-right">
+          <button type="submit" form="newPostForm" class="btn btn-primary"> Submit </button>
+          <button type="reset" form="newPostForm" class="btn btn-secondary"> Reset </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="card">
+        <div class="card-header">Debug info</div>
+        <div class="card-body">
+          <div>Dirty: {{ newPostForm.dirty }}</div>
+          <div>Valid: {{ newPostForm.valid }}</div>
+          <div>Touched: {{ newPostForm.touched }}</div>
+          <div>Submitted: {{ form.submitted }}</div>
+          <div *ngIf="form.submitted">Submitted data: <pre> {{ submitedData | json }} </pre> </div>
+          <div>Form state: <pre> {{ newPostForm.value | json }} </pre> </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
