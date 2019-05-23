@@ -4,7 +4,10 @@ import {
   ControlValueAccessor,
   ValidatorFn,
   FormGroup,
-  ValidationErrors
+  ValidationErrors,
+  NG_VALIDATORS,
+  Validator,
+  AbstractControl
 } from "@angular/forms";
 
 @Component({
@@ -16,10 +19,16 @@ import {
       provide: NG_VALUE_ACCESSOR,
       useExisting: CustomServicesInputComponent,
       multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: CustomServicesInputComponent,
+      multi: true
     }
   ]
 })
-export class CustomServicesInputComponent implements ControlValueAccessor {
+export class CustomServicesInputComponent
+  implements ControlValueAccessor, Validator {
   @Input() options: Array<any>;
 
   @Input() set tabindex(index: number) {
@@ -59,6 +68,9 @@ export class CustomServicesInputComponent implements ControlValueAccessor {
   setDisabledState(val: boolean): void {
     this.disabled = val;
     this.focusedItem = null;
+  }
+  validate(control: AbstractControl): ValidationErrors {
+    return control.value && control.value.length < 1 ? { required: true } : null;
   }
 
   onFocus(event: Event) {
