@@ -1,3 +1,10 @@
 div.btn:not(.disabled) {
   cursor: pointer;
 }
+:host(.form-control) {
+  background-image: unset;
+  height: unset;
+  width: unset;
+  margin: 0px;
+  padding: 0px;
+}

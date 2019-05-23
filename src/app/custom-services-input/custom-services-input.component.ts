@@ -89,10 +89,21 @@ export class CustomServicesInputComponent implements ControlValueAccessor {
   }
 
   findItemIndex(option): number {
-    return this.internalState.findIndex(val => val.id === option.id);
+    return this.internalState
+      ? this.internalState.findIndex(val => val.id === option.id)
+      : -1;
   }
 
   isSelected(option) {
     return this.findItemIndex(option) != -1;
   }
 }
+
+export const maxPriceValidator: ValidatorFn = (
+  control: FormGroup
+): ValidationErrors | null => {
+  const sumPrice = (control.value || [])
+    .map(service => service.price)
+    .reduce((sum, current) => sum + current, 0);
+  return sumPrice > 10 ? { priceTooBig: true } : null;
+};

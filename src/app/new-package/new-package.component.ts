@@ -35,7 +35,7 @@ export class NewPackageComponent implements OnInit {
     this.newPostForm = this.fb.group({
       contact,
       address,
-      services: [[]]
+      services: [[], maxPriceValidator]
     });
 
     this.route.data
