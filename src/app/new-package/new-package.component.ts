@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 
 import { map } from "rxjs/operators";
-import { maxPriceValidator } from '../custom-services-input/custom-services-input.component';
+import { maxPriceValidator } from "../custom-services-input/custom-services-input.component";
 
 @Component({
   selector: "app-new-package",
@@ -22,19 +22,16 @@ export class NewPackageComponent implements OnInit {
 
   ngOnInit() {
     this.availableServices = this.route.snapshot.data.availableServices;
-
-    const address = this.fb.group({
-      city: ["", [Validators.required, Validators.maxLength(20)]],
-      street: ["", Validators.required]
-    });
-    const contact = this.fb.group({
-      firstname: ["", Validators.required],
-      lastname: ["", Validators.required],
-      telNo: ""
-    });
     this.newPostForm = this.fb.group({
-      contact,
-      address,
+      contact: {
+        firstname: "",
+        lastname: "",
+        telNo: ""
+      },
+      address: {
+        city: "",
+        street: ""
+      },
       services: [[], maxPriceValidator]
     });
 
