@@ -12,65 +12,8 @@
             #form="ngForm"
             novalidate
           >
-            <div formGroupName="contact">
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="firstname">First name:</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="firstname"
-                    formControlName="firstname"
-                  />
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="lastname">Last name:</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="lastname"
-                    formControlName="lastname"
-                  />
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="telNo">Tel.no:</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="telNo"
-                    formControlName="telNo"
-                  />
-                </div>
-              </div>
-            </div>
-            <div formGroupName="address">
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="city">City:</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="city"
-                    formControlName="city"
-                  />
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="street">Street:</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="street"
-                    formControlName="street"
-                  />
-                </div>
-              </div>
-            </div>
+            <app-nested-contact-form formGroupName="contact"></app-nested-contact-form>
+            <app-nested-address-form formGroupName="address"></app-nested-address-form>
             <div class="form-row">
               <app-custom-services-input
                 class="mx-auto form-control"
