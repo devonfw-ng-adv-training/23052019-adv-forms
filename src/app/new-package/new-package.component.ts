@@ -13,6 +13,7 @@ export class NewPackageComponent implements OnInit {
   newPostForm: FormGroup;
   submitedData;
   availableServices;
+
   constructor(
     private readonly fb: FormBuilder,
     private readonly route: ActivatedRoute
@@ -20,15 +21,20 @@ export class NewPackageComponent implements OnInit {
 
   ngOnInit() {
     this.availableServices = this.route.snapshot.data.availableServices;
-    const serviceControls = this.availableServices.map(service =>
-      this.fb.control(false)
-    );
-    this.newPostForm = this.fb.group({
+    const serviceControls = this.availableServices.map(service => this.fb.control(false));
+    
+    const address = this.fb.group({
+      city: ["", [Validators.required, Validators.maxLength(20)]],
+      street: ["", Validators.required]
+    });
+    const contact = this.fb.group({
       firstname: ["", Validators.required],
       lastname: ["", Validators.required],
-      city: ["", [Validators.required, Validators.maxLength(20)]],
-      street: ["", Validators.required],
-      telNo: "",
+      telNo: ""
+    });
+    this.newPostForm = this.fb.group({
+      contact,
+      address,
       services: this.fb.array(serviceControls)
     });
 
@@ -42,7 +48,7 @@ export class NewPackageComponent implements OnInit {
                 userService => userService.id === availableService.id
               )
           );
-          return { ...postData.contact, ...postData.address, services };
+          return { ...postData, services };
         })
       )
       .subscribe(data => this.newPostForm.patchValue(data));
@@ -53,23 +59,19 @@ export class NewPackageComponent implements OnInit {
       .map((service, index) => service && this.availableServices[index])
       .filter(val => val);
 
-    this.submitedData = {
-      address: { city: formData.city, street: formData.street },
-      contact: {
-        firstname: formData.firstname,
-        lastname: formData.lastname,
-        telNo: formData.telNo
-      },
-      services
-    };
+    this.submitedData = { ...formData, services };
   }
   reset() {
     this.newPostForm.reset({
-      firstname: "",
-      lastname: "",
-      city: "",
-      street: "",
-      telNo: "",
+      contact: {
+        firstname: "",
+        lastname: "",
+        telNo: ""
+      },
+      address: {
+        city: "",
+        street: ""
+      },
       services: [false, false, false]
     });
   }
