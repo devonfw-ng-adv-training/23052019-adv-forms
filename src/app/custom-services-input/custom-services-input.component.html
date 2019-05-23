@@ -1,0 +1,20 @@
+<div class="btn-group" role="group" aria-label="Available services">
+  <div
+    #optionElem
+    class="btn btn-secondary"
+    *ngFor="let service of options"
+    [attr.aria-label]="service.name"
+    (focus)="onFocus($event)"
+    (blur)="onBlur($event)"
+    [attr.tabindex]="tabindex"
+    [ngClass]="{
+      active: isSelected(service),
+      disabled: disabled,
+      focus: optionElem == focusedItem
+    }"
+    (click)="selectService($event, service)"
+    (keydown.space)="selectService($event, service)"
+  >
+    {{ service.name }}  ${{ service.price }}
+  </div>
+</div>

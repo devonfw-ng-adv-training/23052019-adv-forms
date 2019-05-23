@@ -7,9 +7,10 @@ import { AppComponent } from "./app.component";
 import { NewPackageComponent } from "./new-package/new-package.component";
 import { FormControlErrorDirective } from "./form-control-error/form-control-error.directive";
 import { FormControlErrorComponent } from "./form-control-error/form-control-error.component";
+import { CustomServicesInputComponent } from './custom-services-input/custom-services-input.component';
 
 @NgModule({
-  declarations: [AppComponent, NewPackageComponent, FormControlErrorDirective, FormControlErrorComponent],
+  declarations: [AppComponent, NewPackageComponent, FormControlErrorDirective, FormControlErrorComponent, CustomServicesInputComponent],
   imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule],
   entryComponents: [FormControlErrorComponent],
   providers: [],

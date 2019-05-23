@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 
 import { map } from "rxjs/operators";
+import { maxPriceValidator } from '../custom-services-input/custom-services-input.component';
 
 @Component({
   selector: "app-new-package",
@@ -21,8 +22,7 @@ export class NewPackageComponent implements OnInit {
 
   ngOnInit() {
     this.availableServices = this.route.snapshot.data.availableServices;
-    const serviceControls = this.availableServices.map(service => this.fb.control(false));
-    
+
     const address = this.fb.group({
       city: ["", [Validators.required, Validators.maxLength(20)]],
       street: ["", Validators.required]
@@ -35,31 +35,23 @@ export class NewPackageComponent implements OnInit {
     this.newPostForm = this.fb.group({
       contact,
       address,
-      services: this.fb.array(serviceControls)
+      services: [[]]
     });
 
     this.route.data
-      .pipe(
-        map(data => data.postData),
-        map(postData => {
-          const services = this.availableServices.map(
-            availableService =>
-              !!postData.services.find(
-                userService => userService.id === availableService.id
-              )
-          );
-          return { ...postData, services };
-        })
-      )
+      .pipe(map(data => data.postData))
       .subscribe(data => this.newPostForm.patchValue(data));
+  }
+  toggleEnable() {
+    if (this.newPostForm.enabled) {
+      this.newPostForm.disable();
+    } else {
+      this.newPostForm.enable();
+    }
   }
   submit() {
     const formData = this.newPostForm.value;
-    const services = formData.services
-      .map((service, index) => service && this.availableServices[index])
-      .filter(val => val);
-
-    this.submitedData = { ...formData, services };
+    this.submitedData = { ...formData };
   }
   reset() {
     this.newPostForm.reset({
@@ -72,7 +64,7 @@ export class NewPackageComponent implements OnInit {
         city: "",
         street: ""
       },
-      services: [false, false, false]
+      services: []
     });
   }
 }
