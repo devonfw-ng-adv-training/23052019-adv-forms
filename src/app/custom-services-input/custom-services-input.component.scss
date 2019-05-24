@@ -8,3 +8,7 @@ div.btn:not(.disabled) {
   margin: 0px;
   padding: 0px;
 }
+input{
+  z-index: -1;
+  position: absolute;
+}

@@ -61,9 +61,9 @@ export class CustomServicesInputComponent implements ControlValueAccessor {
     this.focusedItem = null;
   }
 
-  onFocus(event: Event) {
+  onFocus(focusedItem) {
     if (!this.disabled) {
-      this.focusedItem = <HTMLDivElement>event.target;
+      this.focusedItem = focusedItem;
     }
   }
 
@@ -74,8 +74,9 @@ export class CustomServicesInputComponent implements ControlValueAccessor {
     }
   }
 
-  selectService(event, option) {
+  selectService(option, focusedItem) {
     if (!this.disabled) {
+      this.onFocus(focusedItem);
       const index = this.findItemIndex(option);
       if (index != -1) {
         this.internalState = this.internalState.filter((val, i) => i !== index);
@@ -86,6 +87,7 @@ export class CustomServicesInputComponent implements ControlValueAccessor {
       }
       this.onModelChange(this.internalState);
     }
+    console.log(this.internalState);
   }
 
   findItemIndex(option): number {

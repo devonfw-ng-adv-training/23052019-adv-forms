@@ -1,20 +1,29 @@
 <div class="btn-group" role="group" aria-label="Available services">
-  <div
-    #optionElem
-    class="btn btn-secondary"
-    *ngFor="let service of options"
-    [attr.aria-label]="service.name"
-    (focus)="onFocus($event)"
-    (blur)="onBlur($event)"
-    [attr.tabindex]="tabindex"
-    [ngClass]="{
-      active: isSelected(service),
-      disabled: disabled,
-      focus: optionElem == focusedItem
-    }"
-    (click)="selectService($event, service)"
-    (keydown.space)="selectService($event, service)"
-  >
-    {{ service.name }}  ${{ service.price }}
-  </div>
+  <ng-container *ngFor="let service of options">
+    <div
+      #optionElem
+      class="btn btn-secondary"
+      [ngClass]="{
+        active: isSelected(service),
+        disabled: disabled,
+        focus: optionCheckbox == focusedItem
+      }"
+      (click)="selectService(service, optionCheckbox)"
+      [attr.aria-checked]="isSelected(service)"
+      role="checkbox"
+    >
+      {{ service.name }} ${{ service.price }}
+    </div>
+    <input
+      #optionCheckbox
+      type="checkbox"
+      [attr.name]="service.name"
+      [attr.tabindex]="tabindex"
+      (change)="selectService(service, optionCheckbox)"
+      (focus)="onFocus(optionCheckbox)"
+      (blur)="onBlur()"
+      [checked]="isSelected(service)"
+      [disabled]="disabled"
+    />
+  </ng-container>
 </div>

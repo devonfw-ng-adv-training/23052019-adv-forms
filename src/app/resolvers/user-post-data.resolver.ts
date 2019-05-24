@@ -16,7 +16,7 @@ export class UserPostDataResolver implements Resolve<Observable<any>> {
         lastname: "Wawrzyniak",
         telNo: ""
       },
-      services: [{ id: 1, name: "Registered", price: "7" }]
+      services: [{ id: 1, name: "Registered", price: 7 }]
     });
   }
 }
