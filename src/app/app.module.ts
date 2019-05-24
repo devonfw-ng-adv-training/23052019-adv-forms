@@ -10,9 +10,11 @@ import { FormControlErrorComponent } from "./form-control-error/form-control-err
 import { CustomServicesInputComponent } from './custom-services-input/custom-services-input.component';
 import { NestedContactFormComponent } from './new-package/nested-contact-form/nested-contact-form.component';
 import { NestedAddressFormComponent } from './new-package/nested-address-form/nested-address-form.component';
+import { AbstractNestedFormComponent } from './shared/abstract-nested-form.component';
 
 @NgModule({
-  declarations: [AppComponent, NewPackageComponent, FormControlErrorDirective, FormControlErrorComponent, CustomServicesInputComponent, NestedContactFormComponent, NestedAddressFormComponent],
+  declarations: [AppComponent, NewPackageComponent, FormControlErrorDirective, FormControlErrorComponent, CustomServicesInputComponent, NestedContactFormComponent, 
+    NestedAddressFormComponent, AbstractNestedFormComponent],
   imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule],
   entryComponents: [FormControlErrorComponent],
   providers: [],

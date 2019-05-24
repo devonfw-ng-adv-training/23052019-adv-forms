@@ -1,15 +1,12 @@
-import { Component } from "@angular/core";
+import { Component, Injector } from "@angular/core";
 import {
-  FormGroup,
   FormBuilder,
   Validators,
   NG_VALUE_ACCESSOR,
-  ControlValueAccessor,
-  Validator,
-  NG_VALIDATORS,
-  AbstractControl,
-  ValidationErrors
+  NG_VALIDATORS
 } from "@angular/forms";
+
+import { AbstractNestedFormComponent } from "../../shared/abstract-nested-form.component";
 
 @Component({
   selector: "app-nested-contact-form",
@@ -28,34 +25,12 @@ import {
     }
   ]
 })
-export class NestedContactFormComponent
-  implements ControlValueAccessor, Validator {
-  contactForm: FormGroup;
-
-  private onModelTouched: Function = () => {};
-
-  constructor(public fb: FormBuilder) {
-    this.contactForm = this.fb.group({
+export class NestedContactFormComponent extends AbstractNestedFormComponent {
+  ngOnInit() {
+    this.nestedForm = this.fb.group({
       firstname: ["", Validators.required],
       lastname: ["", Validators.required],
       telNo: ""
     });
-  }
-  writeValue(value: any): void {
-    value && this.contactForm.setValue(value, { emitEvent: false });
-  }
-  registerOnChange(fn): void {
-    this.contactForm.valueChanges.subscribe(fn);
-  }
-
-  registerOnTouched(fn: Function): void {
-    this.onModelTouched = fn;
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-    isDisabled ? this.contactForm.disable({emitEvent:false}) : this.contactForm.enable({emitEvent:false});
-  }
-  validate(c: AbstractControl): ValidationErrors | null {
-    return this.contactForm.invalid ? { invalidNestedForm: true } : null;
   }
 }
